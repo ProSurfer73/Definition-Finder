@@ -37,6 +37,8 @@
 		<Unit filename="files.cpp" />
 		<Unit filename="files.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="typedef.cpp" />
+		<Unit filename="typedef.hpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

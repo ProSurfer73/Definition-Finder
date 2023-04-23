@@ -45,7 +45,8 @@ private:
      */
     static bool matchKeyword(const std::string& initialString, const std::string& keyword, size_t startingFrom);
 
-
+/**< the class Typedef has to access to the methods findStr and matchKeyword. */
+friend class Typedef;
 };
 
 
