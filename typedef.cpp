@@ -14,8 +14,8 @@ void Typedef::analyseTypedef(const std::string& sourceCode)
         currentPosition += 8;
 
         // let's retrieve the 2 type names of the typedef.
-        std::string firstType = retrieveTypeName(sourceCode, currentPosition);
-        std::string secondType = retrieveTypeName(sourceCode, currentPosition);
+        std::string firstType = DefinitionScanner::retrieveTypeName(sourceCode, currentPosition);
+        std::string secondType = DefinitionScanner::retrieveTypeName(sourceCode, currentPosition);
 
         // let's register them into the database.
         typedefs.emplace(firstType, secondType);
@@ -42,32 +42,6 @@ size_t Typedef::getSize() const
 {
     // let's return the number of definitions contained inside the database.
     return typedefs.size();
-}
-
-std::string Typedef::retrieveTypeName(const std::string& sourceCode, size_t& pos)
-{
-    // this variable will contain the type name.
-    std::string typeName;
-
-    for(; pos<sourceCode.size(); ++pos)
-    {
-        // if the typename is contained inside the string.
-        if(isspace(sourceCode[pos]) && !typeName.empty())
-        {
-            // if it is the keyword struct or class, it does not count.
-            // we have to see the next keyword.
-            if(typeName == "struct" || typeName == "class")
-                typeName.clear();
-            else
-                break;
-        }
-        else if(!isspace(sourceCode[pos]))
-        {
-            typeName += sourceCode[pos];
-        }
-    }
-
-    return typeName;
 }
 
 void Typedef::printAll() const

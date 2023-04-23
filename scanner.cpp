@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "definitionScanner.hpp"
+#include "scanner.hpp"
 
 void treatSpaces(std::string& str)
 {
@@ -25,20 +25,20 @@ size_t DefinitionScanner::lookForStruct(const std::string& sourceCode, const std
 
 
 
-    // 2. LET'S TREAT "typedef struct" CASE
+    // 2. LET'S TREAT "struct " CASE
 
     std::vector<size_t> positions; // holds all the positions that sub occurs within str
 
-    size_t pos = findStr(sourceCode, "typedef struct ");
+    size_t pos = findStr(sourceCode, "struct ");
     while(pos != std::string::npos)
     {
         positions.push_back(pos);
-        pos = sourceCode.find("typedef struct",pos+1);
+        pos = sourceCode.find("struct ",pos+1);
     }
 
     for(size_t pos : positions)
     {
-        if(matchKeyword(sourceCode, structName, pos))
+        if(retrieveTypeName(sourceCode, pos) == structName)
             return pos;
     }
 
@@ -71,12 +71,28 @@ size_t DefinitionScanner::findStr(const std::string& initialString, const std::s
     return true;
 }
 
-bool DefinitionScanner::matchKeyword(const std::string& initialString, const std::string& keyword, size_t startingFrom)
+std::string DefinitionScanner::retrieveTypeName(const std::string& sourceCode, size_t& pos)
 {
-    for(unsigned i=0; i<keyword.size() && i+startingFrom<initialString.size(); ++i)
+    // this variable will contain the type name.
+    std::string typeName;
+
+    for(; pos<sourceCode.size(); ++pos)
     {
-        if(initialString[i+startingFrom] != keyword[i])
-            return false;
+        // if the typename is contained inside the string.
+        if(isspace(sourceCode[pos]) && !typeName.empty())
+        {
+            // if it is the keyword struct or class, it does not count.
+            // we have to see the next keyword.
+            if(typeName == "struct" || typeName == "class")
+                typeName.clear();
+            else
+                break;
+        }
+        else if(!isspace(sourceCode[pos]))
+        {
+            typeName += sourceCode[pos];
+        }
     }
-    return true;
+
+    return typeName;
 }

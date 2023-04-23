@@ -1,3 +1,4 @@
+#include <fstream>
 #include "files.hpp"
 
 
@@ -97,3 +98,20 @@ bool directoryExists(const char* basepath)
 }
 
 #endif
+
+bool retrieveFileBuffer(std::string& buffer, const std::string& filePath)
+{
+    // first let's open the file.
+    std::ifstream file(filePath);
+
+    // let's check if the file was opened.
+    if(!file)
+        return false;
+
+    // let's fill the buffer with it.
+    buffer.assign(std::istreambuf_iterator<char>(file),std::istreambuf_iterator<char>());
+
+    // return status.
+    return true;
+}
+

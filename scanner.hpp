@@ -36,14 +36,13 @@ private:
      */
     static size_t findStr(const std::string& initialString, const std::string& strToFind, size_t startingFrom=0);
 
-    /** \brief see if the given keyword exist at the exact position given.
+    /** \brief retrieve the keyword among source code.
      *
-     * \param the big string we want to find our keyword.
-     * \param the keyword we want to find.
-     * \return true if the keyword is exactly at the position mentioned, false otherwise.
-     *
+     * \param sourceCode the source code.
+     * \param pos the position at which we want the type name to be retrieved.
+     * \return the name of the type found.
      */
-    static bool matchKeyword(const std::string& initialString, const std::string& keyword, size_t startingFrom);
+    static std::string retrieveTypeName(const std::string& sourceCode, size_t& pos);
 
 /**< the class Typedef has to access to the methods findStr and matchKeyword. */
 friend class Typedef;

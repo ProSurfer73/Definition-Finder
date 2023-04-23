@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "definitionScanner.hpp"
+#include "scanner.hpp"
 
 /**< deals with typedef inside source code. */
 class Typedef
@@ -38,13 +38,7 @@ public:
     void printAll() const;
 
 private:
-    /** \brief retrieve the keyword among source code.
-     *
-     * \param sourceCode the source code.
-     * \param pos the position at which we want the type name to be retrieved.
-     * \return the name of the type found.
-     */
-    std::string retrieveTypeName(const std::string& sourceCode, size_t& pos);
+
 
 private:
     /**< the database containing types and their counterpart definitions */

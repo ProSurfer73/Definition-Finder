@@ -13,6 +13,12 @@
  */
 bool explore_directory(std::string dirname, std::vector<std::string>& files);
 
-
+/** \brief read a file, and put all of its content into a string.
+ *
+ * \param buffer string buffer.
+ * \param filePath path to the file in question.
+ * \return true if the file was opened and read normally, false otherwise.
+ */
+bool retrieveFileBuffer(std::string& buffer, const std::string& filePath);
 
 #endif // FILES_HPP

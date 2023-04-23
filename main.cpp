@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "files.hpp"
-#include "definitionScanner.hpp"
+#include "scanner.hpp"
 
 
 using namespace std;
@@ -62,23 +62,58 @@ int main()
         // let's get input string fro: the user.
         getline(std::cin, userInput);
 
+        //
+        size_t (*pointer)(const std::string&, const std::string&) = nullptr;
+        std::string typeName;
+
         if(userInput == "1")
         {
             // look for struct definition.
+            pointer = &(DefinitionScanner::lookForStruct);
+
+            std::cout << "Now please enter type name: ";
+            std::getline(std::cin, typeName);
         }
         else if(userInput == "2")
         {
             // look for function definition.
+            ///pointer = &(DefinitionScanner::lookForFunction);
         }
         else if(userInput == "3")
         {
             // look for any type, really.
         }
-        else
+        else if(!userInput.empty())
         {
             // incorrect user input.
             std::cout << "incorrect input, please retry." << std::endl;
         }
+
+
+
+
+        if(pointer != nullptr)
+        {
+            std::string fileBuffer;
+            unsigned nbResults = 0;
+
+            for(const std::string& filePath : fileList)
+            {
+                retrieveFileBuffer(fileBuffer, filePath);
+
+                size_t y = (*pointer)(fileBuffer, typeName);
+
+                if(y != std::string::npos)
+                {
+                    std::cout << filePath << std::endl;
+                    ++nbResults;
+                }
+            }
+
+            std::cout << nbResults << " results found." << std::endl;
+
+        }
+
 
     }
     while(!userInput.empty());

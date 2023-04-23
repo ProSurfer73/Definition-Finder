@@ -32,11 +32,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="definitionScanner.cpp" />
-		<Unit filename="definitionScanner.hpp" />
 		<Unit filename="files.cpp" />
 		<Unit filename="files.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="scanner.cpp" />
+		<Unit filename="scanner.hpp" />
+		<Unit filename="strings.cpp" />
+		<Unit filename="strings.hpp" />
 		<Unit filename="typedef.cpp" />
 		<Unit filename="typedef.hpp" />
 		<Extensions />
