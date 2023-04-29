@@ -1,4 +1,5 @@
 #include <vector>
+#include <ostream>
 
 #include "scanner.hpp"
 
@@ -18,7 +19,7 @@ void treatSpaces(std::string& str)
  *
  * /return the character number corresponding to the line in question.
  */
-size_t DefinitionScanner::lookForStruct(const std::string& sourceCode, const std::string& structName)
+size_t DefinitionScanner::lookForStruct(const std::string& sourceCode, const std::string& structName, const Typedef& table)
 {
     // 1. LETS TREAT THE SPACE (contained inside the string)
 
@@ -33,13 +34,14 @@ size_t DefinitionScanner::lookForStruct(const std::string& sourceCode, const std
     while(pos != std::string::npos)
     {
         positions.push_back(pos);
-        pos = sourceCode.find("struct ",pos+1);
+        pos = findStr(sourceCode,"struct ",pos+1);
     }
 
     for(size_t pos : positions)
     {
+        size_t copyPos = pos;
         if(retrieveTypeName(sourceCode, pos) == structName)
-            return pos;
+            return copyPos;
     }
 
     return std::string::npos;
@@ -96,3 +98,24 @@ std::string DefinitionScanner::retrieveTypeName(const std::string& sourceCode, s
 
     return typeName;
 }
+
+void DefinitionScanner::outputStructDef(const std::string& sourceCode, size_t characterNumber, std::ostream& stream)
+{
+    int nbOpened=0;
+
+    for(unsigned i=characterNumber; i<sourceCode.size(); ++i)
+    {
+        stream << sourceCode[i];
+
+        if(sourceCode[i] == '{')
+            nbOpened++;
+        else if(sourceCode[i] == '}')
+            nbOpened--;
+
+        if(sourceCode[i] == ';' && nbOpened <= 0)
+            break;
+    }
+
+    stream << '\n';
+}
+

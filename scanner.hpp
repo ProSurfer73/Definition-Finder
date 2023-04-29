@@ -4,6 +4,9 @@
 
 #include <string>
 
+#include "typedef.hpp"
+class Typedef;
+
 /**< Function to search for definitions inside provided source code. */
 class DefinitionScanner
 {
@@ -15,7 +18,15 @@ public:
      * \return std::string::npos if not found, or the character number at which it was found.
      *
      */
-    static size_t lookForStruct(const std::string& sourceCode, const std::string& structName);
+    static size_t lookForStruct(const std::string& sourceCode, const std::string& structName, const Typedef& table);
+
+    /** \brief print the structure definition.
+     *
+     * \param sourceCode the source code in which the structure definition was found.
+     * \param characterNumber the character number at which the definition was found.
+     */
+    static void outputStructDef(const std::string& sourceCode, size_t characterNumber, std::ostream& stream);
+
 
     /** \brief look for function definition inside source code.
      *

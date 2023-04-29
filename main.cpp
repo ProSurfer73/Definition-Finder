@@ -9,7 +9,7 @@
 
 #include "files.hpp"
 #include "scanner.hpp"
-
+#include "history.hpp"
 
 using namespace std;
 
@@ -32,6 +32,8 @@ int main()
     std::string userInput;
     std::vector<std::string> fileList;
 
+    Typedef table;
+
     // Let's ask for directories
     do
     {
@@ -39,10 +41,9 @@ int main()
 
         std::getline(std::cin, userInput);
 
-        if(!userInput.empty())
+        if(!userInput.empty() && !explore_directory(userInput, fileList))
         {
-            if(!explore_directory(userInput, fileList))
-                std::cout << "/!\\ Can't open the directory path provided /!\\" << std::endl;
+            std::cout << "/!\\ Can't open the directory path provided /!\\" << std::endl;
         }
 
     }
@@ -55,6 +56,7 @@ int main()
     std::cout << "Now please type the definition you would like to find:" << std::endl;
     std::cout << "1. structure (struct keyword)." << std::endl;
     std::cout << "2. function definition." << std::endl;
+    std::cout << "3. macro definition." << std::endl;
     std::cout << "3. any type." << std::endl;
 
     do
@@ -63,7 +65,7 @@ int main()
         getline(std::cin, userInput);
 
         //
-        size_t (*pointer)(const std::string&, const std::string&) = nullptr;
+        size_t (*pointer)(const std::string&, const std::string&, const Typedef&) = nullptr;
         std::string typeName;
 
         if(userInput == "1")
@@ -101,11 +103,18 @@ int main()
             {
                 retrieveFileBuffer(fileBuffer, filePath);
 
-                size_t y = (*pointer)(fileBuffer, typeName);
+                // 1. register typedefs.
+                //table.analyseTypedef(fileBuffer);
+
+                // 2. run the detection function provided.
+                size_t y = (*pointer)(fileBuffer, typeName, table);
 
                 if(y != std::string::npos)
                 {
                     std::cout << filePath << std::endl;
+                    //DefinitionScanner::outputStructDef(fileBuffer, y, std::cout);
+                    std::cout << std::endl;
+
                     ++nbResults;
                 }
             }

@@ -34,5 +34,11 @@ bool simpleReplace(std::string& str, const std::string& from, const std::string&
  */
 bool hasEnding (std::string const &fullString, std::string const &ending);
 
+/** \brief Checks if two strings are equal, case insensitively.
+  * \param str1 the first string.
+  * \param str2 the second string.
+  * \return true if str1 equal str2 case insensitively, otherwise false.
+  */
+bool equalInsensitive(const std::string& str1, const std::string& str2);
 
 #endif // STRINGS_HPP

@@ -25,6 +25,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-static" />
 				</Linker>
 			</Target>
 		</Build>
@@ -32,8 +33,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="define.cpp" />
+		<Unit filename="define.hpp" />
 		<Unit filename="files.cpp" />
 		<Unit filename="files.hpp" />
+		<Unit filename="history.cpp" />
+		<Unit filename="history.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="scanner.cpp" />
 		<Unit filename="scanner.hpp" />

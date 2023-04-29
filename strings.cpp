@@ -29,3 +29,18 @@ bool hasEnding (std::string const &fullString, std::string const &ending)
         return false;
     }
 }
+
+// Let's check if the two strings ar eequal or not.
+// we consider the characters to be case insensitive.
+bool equalInsensitive(const std::string& str1, const std::string& str2)
+{
+    bool sameString = true;
+
+    for(unsigned i=0; i<str1.size(); ++i)
+    {
+        if(toupper(str1[i])!=toupper(str2[i]))
+            sameString = false;
+    }
+
+    return sameString;
+}
