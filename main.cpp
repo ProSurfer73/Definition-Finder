@@ -33,13 +33,24 @@ int main()
     std::vector<std::string> fileList;
 
     Typedef table;
+    History history;
+
 
     // Let's ask for directories
     do
     {
         std::cout << "Please type the name of a folder (or nothing to continue):" << std::endl;
 
+        history.showPossibilities("dir");
+
         std::getline(std::cin, userInput);
+
+
+
+        history.tryPossibilities(userInput, "dir");
+
+        history.pushHistory("dir", userInput, true);
+
 
         if(!userInput.empty() && !explore_directory(userInput, fileList))
         {
@@ -57,7 +68,7 @@ int main()
     std::cout << "1. structure (struct keyword)." << std::endl;
     std::cout << "2. function definition." << std::endl;
     std::cout << "3. macro definition." << std::endl;
-    std::cout << "3. any type." << std::endl;
+    std::cout << "4. any type." << std::endl;
 
     do
     {
